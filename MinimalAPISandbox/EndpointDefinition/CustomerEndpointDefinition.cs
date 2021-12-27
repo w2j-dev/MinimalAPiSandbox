@@ -1,24 +1,17 @@
-﻿using MinimalAPISandbox.EndpointDefinition.VersionControl;
+﻿using MinimalAPISandbox.EndpointDefinition.AbstractionEndpointDefinition;
 
 namespace MinimalAPISandbox.EndpointDefinition
 {
-    public class CustomerEndpointDefinition : IEndpointDefinition
+    public class CustomerEndpointDefinition : AbstractCustomerEndpointDefinition
     {
-        public void EndpointDefinition(WebApplication app)
+        internal override IResult GetAllCustomers()
         {
-            app
-                .MapGet(EndpointRouteVersion.Route("customer", ApiVersionControl.V1), GetAllCustomers)
-                .WithName("GetallCustomers")
-                .WithTags($"Customer {ApiVersionControl.V1}")
-                .Produces<List<string>>(StatusCodes.Status200OK)
-                .Produces(StatusCodes.Status400BadRequest)
-                .WithGroupName(ApiVersionControl.V1);
+            return Results.Ok(new List<string> { "A", "B", "C", "D" });
         }
 
-        
-        internal IResult GetAllCustomers()
+        internal override IResult GetCustomer(int id)
         {
-            return Results.Ok(new List<string> { "A", "B", "C", "D"});
+            return Results.Ok(id);
         }
     }
 }

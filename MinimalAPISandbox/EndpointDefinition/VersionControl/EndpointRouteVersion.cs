@@ -2,19 +2,17 @@
 {
     public static class EndpointRouteVersion
     {
-        public static string Route(string hitPoint, string version, params string[] test)
+        public static string Route(string hitPoint, string? version = null, params string[] hitPointParams)
         {
-            if(test.Length != 0)
+            if(hitPointParams.Length != 0)
             {
                 var result = string.Empty;
-                foreach(var testItem in test)
+                foreach(var testItem in hitPointParams)
                     result = $"{result}/{testItem}";
                 return $"api/{version}/{hitPoint}{result}";
             }
             return $"api/{version}/{hitPoint}";
         }
-        public static string Route(string hitPoint)
-            => $"api/{hitPoint}";
     }
 
     public static class ApiVersionControl
